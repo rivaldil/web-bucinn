@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be Mine? 💕</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hearts {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 192, 203, 0.7);
+            font-size: 20px;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            background-image:url(yaya.jpeg);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+            transform: scale(0.8);
+            opacity: 0;
+            animation: fadeIn 1s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .envelope {
+            font-size: 80px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .envelope:hover {
+            transform: scale(1.2);
+        }
+
+        .envelope.opened {
+            animation: none;
+            transform: scale(0.8);
+            opacity: 0.5;
+        }
+
+        .message {
+            display: none;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .title {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2.5em;
+            color: blue;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .question {
+            font-size: 1.3em;
+            color: white;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-yes {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a52);
+            color: white;
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(238, 90, 82, 0.4);
+        }
+
+        .btn-no {
+            background: #f8f9fa;
+            color: #666;
+            border: 2px solid #dee2e6;
+            position: relative;
+        }
+
+        .btn-no:hover {
+            background: #e9ecef;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .celebration {
+            display: none;
+            animation: celebrate 0.8s ease-out;
+        }
+
+        @keyframes celebrate {
+            0% { transform: scale(0) rotate(180deg); opacity: 0; }
+            50% { transform: scale(1.2) rotate(360deg); opacity: 1; }
+            100% { transform: scale(1) rotate(360deg); opacity: 1; }
+        }
+
+        .emoji {
+            font-size: 4em;
+            margin: 20px 0;
+            animation: bounce 1s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-20px); }
+            60% { transform: translateY(-10px); }
+        }
+
+        .click-instruction {
+            color: #f0fffc;
+            font-size: 0.9em;
+            margin-top: 10px;
+            animation: blink 2s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0.5; }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts"></div>
+    
+    <div class="container">
+        <div class="envelope" onclick="openEnvelope()">💌</div>
+        <p class="click-instruction">klik disini yaya ! 💕</p>
+        
+        <div class="message" id="proposal">
+            <h1 class="title">dear yaya </h1>
+            <div class="emoji">💕</div>
+            <p class="question">
+                kamu itu orangnya ngangenin <br>
+                jadi untuk mengobati rasa kangen itu<br><br>
+                <strong>maukah Yaya jadi pacarku? 💍</strong>
+            </p>
+            
+            <div class="buttons">
+                <button class="btn btn-yes" onclick="sayYes()">Yes! 💕</button>
+                <button class="btn btn-no" id="noBtn" onclick="moveButton()">No</button>
+            </div>
+        </div>
+        
+        <div class="celebration" id="celebration">
+            <div class="emoji">🎉</div>
+            <h2 class="title">Yayyy! 🥳</h2>
+            <p class="question">
+                sekarang kamu adalah hatiku!<br>
+                I love you so much! 💕✨
+            </p>
+            <div class="emoji">💑</div>
+        </div>
+    </div>
+
+    <script>
+        // Create floating hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = '💕';
+            heart.style.left = Math.random() * 100 + '%';
+            heart.style.animationDuration = (Math.random() * 3 + 3) + 's';
+            heart.style.animationDelay = Math.random() * 2 + 's';
+            document.querySelector('.hearts').appendChild(heart);
+            
+            setTimeout(() => {
+                heart.remove();
+            }, 6000);
+        }
+
+        // Create hearts periodically
+        setInterval(createHeart, 800);
+
+        function openEnvelope() {
+            document.querySelector('.envelope').classList.add('opened');
+            document.querySelector('.click-instruction').style.display = 'none';
+            setTimeout(() => {
+                document.querySelector('.envelope').style.display = 'none';
+                document.getElementById('proposal').style.display = 'block';
+            }, 500);
+        }
+
+        function sayYes() {
+            document.getElementById('proposal').style.display = 'none';
+            document.getElementById('celebration').style.display = 'block';
+            
+            // Confetti effect
+            for (let i = 0; i < 50; i++) {
+                setTimeout(() => {
+                    createConfetti();
+                }, i * 100);
+            }
+
+            // Sweet alert
+            setTimeout(() => {
+                Swal.fire({
+                    title: 'Perfect! 💕',
+                    text: 'Our beautiful journey begins now!',
+                    icon: 'success',
+                    confirmButtonText: 'I love you too! 💕',
+                    confirmButtonColor: '#ff6b6b'
+                });
+            }, 2000);
+        }
+
+        function createConfetti() {
+            const confetti = document.createElement('div');
+            confetti.innerHTML = ['🎉', '💕', '🌟', '💖', '✨'][Math.floor(Math.random() * 5)];
+            confetti.style.position = 'fixed';
+            confetti.style.left = Math.random() * 100 + '%';
+            confetti.style.top = '-50px';
+            confetti.style.fontSize = '20px';
+            confetti.style.zIndex = '1000';
+            confetti.style.pointerEvents = 'none';
+            confetti.style.animation = 'float 3s linear forwards';
+            document.body.appendChild(confetti);
+            
+            setTimeout(() => {
+                confetti.remove();
+            }, 3000);
+        }
+
+        let moveCount = 0;
+        function moveButton() {
+            const button = document.getElementById('noBtn');
+            const container = document.querySelector('.container');
+            
+            moveCount++;
+            
+            if (moveCount <= 3) {
+                const messages = [
+                    "kamu serius? 🥺",
+                    "aku mohon! 💕",
+                    "ayolah yaya! 🌟"
+                ];
+                
+                button.innerHTML = messages[moveCount - 1];
+                
+                // Move button to random position
+                const randomX = Math.random() * 200 - 100;
+                const randomY = Math.random() * 100 - 50;
+                button.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                
+                // Make button smaller each time
+                button.style.transform += ` scale(${1 - moveCount * 0.1})`;
+            } else {
+                // After 3 attempts, make it harder to click "no"
+                Swal.fire({
+                    title: 'Really? 🥺',
+                    text: 'Hatiku hancur... tapi aku mengerti jika kamu butuh waktu.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: ' mau? 💕',
+                    cancelButtonText: 'aku butuh waktu...',
+                    confirmButtonColor: '#ff6b6b',
+                    cancelButtonColor: '#6c757d'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        sayYes();
+                    } else {
+                        Swal.fire({
+                            title: 'That\'s okay 💙',
+                            text: 'Take all the time you need. I\'ll be here waiting! 🌟',
+                            icon: 'info',
+                            confirmButtonColor: '#ff6b6b'
+                        });
+                    }
+                });
+            }
+        }
+
+        // Add some sparkle effects on mouse move
+        document.addEventListener('mousemove', (e) => {
+            if (Math.random() < 0.1) {
+                const sparkle = document.createElement('div');
+                sparkle.innerHTML = '✨';
+                sparkle.style.position = 'fixed';
+                sparkle.style.left = e.clientX + 'px';
+                sparkle.style.top = e.clientY + 'px';
+                sparkle.style.pointerEvents = 'none';
+                sparkle.style.fontSize = '12px';
+                sparkle.style.animation = 'fadeOut 1s forwards';
+                sparkle.style.zIndex = '999';
+                document.body.appendChild(sparkle);
+                
+                setTimeout(() => {
+                    sparkle.remove();
+                }, 1000);
+            }
+        });
+
+        // Add fadeOut animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeOut {
+                to {
+                    opacity: 0;
+                    transform: translateY(-20px) scale(0.5);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
